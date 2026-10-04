@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>De Venezuela a Argentina VE ➔ AR</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <div class="app-container">
+
+        <!-- ENCABEZADO PRINCIPAL -->
+        <header class="header">
+            <h1>De Venezuela a Argentina <span class="flag">VE</span> <span class="flag">AR</span></h1>
+            <p>Un regalo especial para ti hermana</p>
+        </header>
+
+        <!-- PANTALLA PRINCIPAL: MENÚ -->
+        <div id="mainMenu" class="main-menu-container">
+            <div class="banner-instalacion">
+                <button onclick="mostrarInstruccionesPWA()" class="btn-pwa">
+                    📱 ¿Cómo agregar esta app a la Pantalla de Inicio de tu iPhone?
+                </button>
+            </div>
+
+            <div class="menu-grid">
+                <div class="menu-card" onclick="mostrarPagina('secExtrano')">
+                    <div class="menu-icon">🫂</div>
+                    <h3>¿Nos extrañas hoy?</h3>
+                </div>
+                <div class="menu-card" onclick="mostrarPagina('secCumple')">
+                    <div class="menu-icon">🎂</div>
+                    <h3>Tu Cumpleaños</h3>
+                </div>
+                <div class="menu-card" onclick="mostrarPagina('secQuiz')">
+                    <div class="menu-icon">❓</div>
+                    <h3>Quiz de Reencuentro</h3>
+                </div>
+                <div class="menu-card" onclick="mostrarPagina('secAudio')">
+                    <div class="menu-icon">🎵</div>
+                    <h3>Audiolibros y Música</h3>
+                </div>
+                <div class="menu-card" onclick="mostrarPagina('secCartas')">
+                    <div class="menu-icon">💌</div>
+                    <h3>Cartas de la Familia</h3>
+                </div>
+                <div class="menu-card" onclick="mostrarPagina('secFotos')">
+                    <div class="menu-icon">📸</div>
+                    <h3>Galería de Fotos</h3>
+                </div>
+                <div class="menu-card menu-card-destacado" onclick="mostrarPagina('secDesahogate')">
+                    <div class="menu-icon">📖</div>
+                    <h3>Desahógate aquí</h3>
+                </div>
+            </div>
+        </div>
+
+        <!-- 1. SECCIÓN: ¿NOS EXTRAÑAS HOY? -->
+        <section id="secExtrano" class="page">
+            <button class="btn-volver" onclick="volverAlMenu()">← Volver al Menú</button>
+            <div class="card">
+                <h3>🫂 Un Abrazo Digital</h3>
+                <p>Presiona el botón cuando sientas nostalgia o quieras sentirnos cerca:</p>
+                <button id="btnExtraño" onclick="enviarAbrazoDigital()" class="btn-quiz" style="margin-top: 15px; width: 100%;">
+                    ❤️ Enviar Abrazo Digital a la Familia
+                </button>
+                <div id="msgEmotivo" class="mensaje-exito" style="display: none;"></div>
+            </div>
+        </section>
+
+        <!-- 2. SECCIÓN: TU CUMPLEAÑOS -->
+        <section id="secCumple" class="page">
+            <button class="btn-volver" onclick="volverAlMenu()">← Volver al Menú</button>
+            <div class="card text-center">
+                <h3>🎂 Feliz Cumpleaños</h3>
+                <p style="margin-bottom: 20px;">Un espacio guardado para celebrar este día a la distancia. El contenido especial se desbloqueará en:</p>
+                
+                <div class="countdown-container">
+                    <div class="time-block">
+                        <span id="cd-dias">00</span>
+                        <label>Días</label>
+                    </div>
+                    <div class="time-block">
+                        <span id="cd-horas">00</span>
+                        <label>Horas</label>
+                    </div>
+                    <div class="time-block">
+                        <span id="cd-minutos">00</span>
+                        <label>Minutos</label>
+                    </div>
+                    <div class="time-block">
+                        <span id="cd-segundos">00</span>
+                        <label>Segundos</label>
+                    </div>
+                </div>
+                <div id="cumpleUnlockMsg" class="mensaje-desbloqueado" style="display: none;">
+                    🎉 ¡Llegó el día especial! Disfruta de tu regalo. ❤️
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. SECCIÓN: QUIZ Y 100 COSAS -->
+        <section id="secQuiz" class="page">
+            <button class="btn-volver" onclick="volverAlMenu()">← Volver al Menú</button>
+            <div class="card">
+                <div class="audio-tabs">
+                    <button class="tab-btn active" onclick="cambiarTabQuiz('tab100Cosas', this)">✨ 100 Cosas Sobre Mí</button>
+                    <button class="tab-btn" onclick="cambiarTabQuiz('tabQuizOriginal', this)">❓ Quiz de Reencuentro</button>
+                </div>
+
+                <!-- TAB 1: 100 COSAS -->
+                <div id="tab100Cosas" class="tab-content active">
+                    <div class="tab-header text-center" style="margin-bottom: 20px;">
+                        <h3>✨ Cuéntame 100 Cosas Sobre Ti</h3>
+                        <p>Escribe cosas sobre ti. ¡Al completar las 100 se notificará automáticamente a tu hermano!</p>
+                        <button onclick="abrirModalFormulario100Cosas()" class="btn-quiz" style="margin-top: 15px;">
+                            ✍️ Agregar nueva cosa sobre mí
+                        </button>
+                    </div>
+                    <hr class="separador-seccion">
+                    <h4>📝 Cosas contadas hasta ahora:</h4>
+                    <div id="lista100Cosas" class="lista-container" style="margin-top: 15px;"></div>
+                </div>
+
+                <!-- TAB 2: QUIZ DE REENCUENTRO -->
+                <div id="tabQuizOriginal" class="tab-content">
+                    <div class="tab-header text-center" style="margin-bottom: 20px;">
+                        <h3>❓ Quiz de Reencuentro</h3>
+                        <p>Responde cada pregunta para desbloquear y descubrir mi respuesta personal.</p>
+                    </div>
+                    <div id="listaQuizPreguntas" class="quiz-lista-container"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN: AUDIOLIBROS Y MÚSICA -->
+        <section id="secAudio" class="page">
+            <button class="btn-volver" onclick="volverAlMenu()">← Volver al Menú</button>
+            
+            <div class="card">
+                <!-- Pestañas de Navegación Superior -->
+                <div class="tabs-audio">
+                    <button class="tab-audio-btn active" onclick="cambiarTabAudio('audiolibros', this)">📚 Audiolibros</button>
+                    <button class="tab-audio-btn" onclick="cambiarTabAudio('demi', this)">🎶 De mí para ti</button>
+                    <button class="tab-audio-btn" onclick="cambiarTabAudio('recomiendame', this)">🎧 Recomiéndame Música</button>
+                </div>
+
+                <!-- PESTAÑA 1: AUDIOLIBROS -->
+                <div id="tab-audiolibros" class="tab-audio-content active">
+                    <div class="audio-header">
+                        <h3>📚 Audiolibros y Reflexiones</h3>
+                        <p>Historias y enseñanzas para escuchar en cualquier momento.</p>
+                    </div>
+
+                    <div class="audio-grid">
+                        <div class="audio-card">
+                            <div class="audio-cover-container">
+                                <img src="Portadas/El monje portada.jpg" alt="El Monje que vendió su Ferrari" class="audio-cover" onerror="this.src='https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=500&auto=format&fit=crop&q=60'">
+                                <span class="audio-badge">Audiolibro</span>
+                            </div>
+                            <div class="audio-details">
+                                <h4>El Monje que Vendió su Ferrari</h4>
+                                <p class="audio-autor">Robin Sharma</p>
+                                <p class="audio-desc">Una fábula espiritual sobre cómo alcanzar tus sueños y cumplir tu destino.</p>
+                                <audio controls src="Audios/El monje que vendio su ferrari audio libro.m4a" class="custom-audio-player"></audio>
+                            </div>
+                        </div>
+
+                        <div class="audio-card">
+                            <div class="audio-cover-container">
+                                <img src="Portadas/babilonia portada.jpg" alt="El Hombre más Rico de Babilonia" class="audio-cover" onerror="this.src='https://images.unsplash.com/photo-1512820790803-83ca734da794?w=500&auto=format&fit=crop&q=60'">
+                                <span class="audio-badge">Audiolibro</span>
+                            </div>
+                            <div class="audio-details">
+                                <h4>El Hombre más Rico de Babilonia</h4>
+                                <p class="audio-autor">George S. Clason</p>
+                                <p class="audio-desc">Secretos y principios de éxito financiero personal y sabiduría antigua.</p>
+                                <audio controls src="Audios/El hombre más rico de Babilonia audio libro.m4a" class="custom-audio-player"></audio>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PESTAÑA 2: DE MÍ PARA TI -->
+                <div id="tab-demi" class="tab-audio-content">
+                    <div class="audio-header">
+                        <h3>🎶 Canciones para Ti</h3>
+                        <p>Músicas especiales que quiero que escuches.</p>
+                    </div>
+
+                    <div class="audio-grid">
+                        <div class="audio-card">
+                            <div class="audio-cover-container">
+                                <img src="Portadas/babysita.jpg" alt="Canción Especial" class="audio-cover" onerror="this.src='https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=500&auto=format&fit=crop&q=60'">
+                                <span class="audio-badge badge-music">Música</span>
+                            </div>
+                            <div class="audio-details">
+                                <h4>Babysita /3</h4>
+                                <p class="audio-autor">Älvaro Diaz</p>
+                                <p class="audio-desc">Escuchala y dime si sientes algo!</p>
+                                <audio controls src="Audios/Alvaro Diaz - Babysita 3 (Audio).mp3" class="custom-audio-player"></audio>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="audio-grid">
+                        <div class="audio-card">
+                            <div class="audio-cover-container">
+                                <img src="Portadas/mami portada.jpg" alt="Canción Especial" class="audio-cover" onerror="this.src='https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=500&auto=format&fit=crop&q=60'">
+                                <span class="audio-badge badge-music">Música</span>
+                            </div>
+                            <div class="audio-details">
+                                <h4>MAMI 100PRE SABE</h4>
+                                <p class="audio-autor">Älvaro Diaz</p>
+                                <p class="audio-desc">Escuchala y dime si sientes algo!</p>
+                                <audio controls src="Audios/Álvaro Díaz, NSQK - MAMI 100PRE SABE (Visualizer).mp3" class="custom-audio-player"></audio>
+                            </div>
+                        </div>
+                    </div>
+
+                     <div class="audio-grid">
+                        <div class="audio-card">
+                            <div class="audio-cover-container">
+                                <img src="Portadas/Niño portada.jpg" alt="Canción Especial" class="audio-cover" onerror="this.src='https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=500&auto=format&fit=crop&q=60'">
+                                <span class="audio-badge badge-music">Música</span>
+                            </div>
+                            <div class="audio-details">
+                                <h4>NIÑO</h4>
+                                <p class="audio-autor">Milo J</p>
+                                <p class="audio-desc">Escuchala y dime si sientes algo!</p>
+                                <audio controls src="Audios/Niño Milo J.m4a" class="custom-audio-player"></audio>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+
+
+
+                <!-- PESTAÑA 3: RECOMIÉNDAME MÚSICA -->
+                <div id="tab-recomiendame" class="tab-audio-content">
+                    <div class="audio-header">
+                        <h3>🎧 ¿Qué música estás escuchando?</h3>
+                        <p>Busca cualquier canción en iTunes, escucha 30 segundos de vista previa y agrégala a tus recomendaciones.</p>
+                    </div>
+
+                    <!-- Buscador Global iTunes -->
+                    <div class="audio-recommend-box">
+                        <div class="input-search-container">
+                            <input 
+                                type="text" 
+                                id="inputSongName" 
+                                class="input-styled" 
+                                placeholder="🔍 Buscar cualquier canción o artista (ej: bad bunny mia)..." 
+                                oninput="buscarMusicaiTunes(this.value)"
+                                autocomplete="off"
+                            >
+                            <button id="btnLimpiarBuscador" class="btn-clear-search" onclick="limpiarBuscador()" style="display: none;">✕</button>
+                        </div>
+                        
+                        <!-- Dropdown fuera del contenedor encogido -->
+                        <div id="resultadosBuscador" class="buscador-resultados-dropdown"></div>
+                    </div>
+
+                    <!-- Lista de Canciones Recomendadas/Guardadas -->
+                    <div class="recommend-header-bar">
+                        <h4>🎵 Recomendaciones guardadas:</h4>
+                        <button class="btn-clear-all" onclick="vaciarTodasRecomendaciones()">Vaciar lista</button>
+                    </div>
+                    <div id="listaRecomendacionesMusica" class="recommend-list">
+                        <!-- Las recomendaciones se cargarán aquí -->
+                    </div>
+                </div>
+            </div>    
+        </section>
+
+        <!-- 5. SECCIÓN: CARTAS DE LA FAMILIA -->
+        <section id="secCartas" class="page">
+            <button class="btn-volver" onclick="volverAlMenu()">← Volver al Menú</button>
+            <div class="card">
+                <div class="tab-header text-center" style="margin-bottom: 25px;">
+                    <h3>💌 Cartas y Mensajes Especiales</h3>
+                    <p>Haz clic en cada sobre para desplegar la carta en tamaño grande.</p>
+                </div>
+                <div class="grid-cartas">
+                    <div class="card-sobre" onclick="abrirModalCarta('mama')">
+                        <div class="icono-sobre">✉️</div>
+                        <h4>Tu Mamá</h4>
+                        <button class="btn-abrir-carta">Leer mensaje</button>
+                    </div>
+                    <div class="card-sobre" onclick="abrirModalCarta('papa')">
+                        <div class="icono-sobre">✉️</div>
+                        <h4>Tu Papá</h4>
+                        <button class="btn-abrir-carta">Leer mensaje</button>
+                    </div>
+                    <div class="card-sobre" onclick="abrirModalCarta('jose')">
+                        <div class="icono-sobre">✉️</div>
+                        <h4>Jose</h4>
+                        <button class="btn-abrir-carta">Leer mensaje</button>
+                    </div>
+                    <div class="card-sobre carta-bloqueada" onclick="abrirModalCarta('bblu')">
+                        <div class="icono-sobre">🔒</div>
+                        <h4>💙 bblu</h4>
+                        <button class="btn-abrir-carta btn-pin">Mensaje privado</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+       <!-- 6. SECCIÓN: GALERÍA DE FOTOS Y VIDEOS -->
+        <section id="secFotos" class="page">
+            <button class="btn-volver" onclick="volverAlMenu()">← Volver al Menú</button>
+            <div class="card">
+                <div class="tab-header text-center" style="margin-bottom: 20px;">
+                    <h3>📸 Galería de Fotos y Videos</h3>
+                    <p>Nuestros mejores momentos guardados para siempre.</p>
+                </div>
+
+                <!-- CONTENEDOR DE LA GALERÍA MULTIMEDIA -->
+                <div class="grid-galeria-multimedia">
+                    
+                    <!-- Ejemplo de Foto Local -->
+                    <div class="card-multimedia" onclick="abrirVisorMultimedia('imagen', 'fotos/recuerdo1.jpg', 'Nuestro viaje / momento especial')">
+                        <img src="fotos/recuerdo1.jpg" alt="Recuerdo">
+                        <div class="multimedia-info">
+                            <span>📷 Foto especial</span>
+                        </div>
+                    </div>
+
+                    <!-- Ejemplo de Video Local -->
+                    <div class="card-multimedia" onclick="abrirVisorMultimedia('video', 'Videos/llavero.mp4', 'Video del llavero que te envié')">
+                        <video src="Videos/llavero.mp4"></video>
+                        <div class="multimedia-info">
+                            <span>🎥 Video</span>
+                        </div>
+                    </div>
+
+                     <div class="card-multimedia" onclick="abrirVisorMultimedia('video', 'Videos/Corazón.mp4', 'Video del corazón que huele a mi.')">
+                        <video src="Videos/Corazón.mp4"></video>
+                        <div class="multimedia-info">
+                            <span>🎥 Video</span>
+                        </div>
+                    </div>
+
+                    <div class="card-multimedia" onclick="abrirVisorMultimedia('video', 'Videos/Control.mp4', 'Video del Control de Ese')">
+                        <video src="Videos/Control.mp4.mp4"></video>
+                        <div class="multimedia-info">
+                            <span>🎥 Video</span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- VENTANA EMERGENTE (MODAL) PARA VER FOTOS/VIDEOS EN GRANDE -->
+        <div id="modalMultimedia" class="modal-overlay" onclick="cerrarModalMultimedia(event)">
+            <div class="modal-contenido text-center" style="max-width: 700px;">
+                <button class="btn-cerrar-modal" onclick="cerrarModalMultimediaForzado()">✕</button>
+                <div id="contenidoVisorModal" style="margin-top: 10px; margin-bottom: 15px;">
+                    <!-- Aquí se inyectará la foto o video en grande -->
+                </div>
+                <p id="modalMultimediaTitulo" style="font-weight: 600; color: #334155; font-size: 1rem;"></p>
+            </div>
+        </div>
+
+        <!-- 7. SECCIÓN: DESAHÓGATE AQUÍ -->
+        <section id="secDesahogate" class="page">
+            <button class="btn-volver" onclick="volverAlMenu()">← Volver al Menú</button>
+            <div class="card">
+                <div class="tab-header text-center" style="margin-bottom: 25px;">
+                    <h3>📖 Desahógate Aquí</h3>
+                    <p>Este es tu diario personal e íntimo. Escribe todo lo que sientas sin límites.</p>
+                    <button onclick="abrirModalFormularioDiario()" class="btn-quiz" style="margin-top: 15px; font-size: 1rem; padding: 12px 24px;">
+                        ✍️️ Crear nueva entrada en mi diario
+                    </button>
+                </div>
+
+                <hr class="separador-seccion">
+                <h4 style="color: #4a154b; margin-bottom: 15px;">🖼️ Tu Galería de Recuerdos y Escritos:</h4>
+                <div id="galeriaDiario" class="grid-galeria-diario"></div>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- MODAL POPUP CARTA -->
+    <div id="modalCarta" class="modal-overlay" onclick="cerrarModalCarta(event)">
+        <div class="modal-contenido">
+            <button class="btn-cerrar-modal" onclick="cerrarModalForzado()">✕</button>
+            <div class="modal-header">
+                <span id="modalIcono" style="font-size: 2.5rem;">💌</span>
+                <h3 id="modalTitulo">Mensaje</h3>
+            </div>
+            <div class="modal-body">
+                <p id="modalTexto"></p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-quiz" onclick="cerrarModalForzado()">Cerrar y Volver</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL POPUP DIARIO -->
+    <div id="modalDiario" class="modal-overlay" onclick="cerrarModalDiario(event)">
+        <div class="modal-contenido">
+            <button class="btn-cerrar-modal" onclick="cerrarModalDiarioForzado()">✕</button>
+            
+            <div id="modoLecturaDiario">
+                <div class="modal-header">
+                    <span style="font-size: 2.5rem;">📖</span>
+                    <h3 id="modalDiarioTitulo" style="margin-top: 5px;"></h3>
+                    <p id="modalDiarioFecha" style="font-size: 0.85rem; color: #64748b; margin-top: 4px;"></p>
+                </div>
+                <div class="modal-body">
+                    <p id="modalDiarioTexto"></p>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn-quiz" onclick="cerrarModalDiarioForzado()">Cerrar y Volver</button>
+                </div>
+            </div>
+
+            <div id="modoFormularioDiario" style="display: none;">
+                <div class="modal-header">
+                    <span style="font-size: 2.2rem;">✍️</span>
+                    <h3 id="modalFormDiarioTituloHead">Nueva Entrada en el Diario</h3>
+                </div>
+                <div class="modal-body">
+                    <div class="input-grupo" style="margin-bottom: 12px;">
+                        <label for="tituloDiario">Título de tu escrito / pensamiento:</label>
+                        <input type="text" id="tituloDiario" class="custom-input" placeholder="Ej: Hoy te extrañé mucho...">
+                    </div>
+                    <div class="input-grupo" style="margin-bottom: 12px;">
+                        <label for="fechaDiario">Fecha:</label>
+                        <input type="date" id="fechaDiario" class="custom-input">
+                    </div>
+                    <div class="input-grupo">
+                        <label for="textoDiario">Escribe aquí todo lo que quieras desahogar:</label>
+                        <textarea id="textoDiario" class="custom-input" rows="6" placeholder="Cuéntame cómo va tu día o qué sientes..."></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button onclick="guardarEntradaDiario()" id="btnGuardarDiario" class="btn-quiz" style="width: 100%;">
+                        ✨ Guardar en mi Galería
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL POPUP SUB-PÁGINA QUIZ DE REENCUENTRO -->
+    <div id="modalQuizAnswer" class="modal-overlay" onclick="cerrarModalQuiz(event)">
+        <div class="modal-contenido">
+            <button class="btn-cerrar-modal" onclick="cerrarModalQuizForzado()">✕</button>
+            <div class="modal-header">
+                <span style="font-size: 2.2rem;">❓</span>
+                <h3 id="modalQuizPreguntaTitulo">Pregunta del Quiz</h3>
+            </div>
+            <div class="modal-body">
+                <div class="input-grupo">
+                    <label for="inputModalQuiz">Escribe tu respuesta para descubrir la mía:</label>
+                    <textarea id="inputModalQuiz" class="custom-input" rows="4" placeholder="Escribe tu respuesta aquí..."></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button onclick="confirmarRespuestaModalQuiz()" class="btn-quiz" style="width: 100%;">
+                    💾 Guardar y ver respuesta de bblu 💙
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL POPUP FORMULARIO 100 COSAS -->
+    <div id="modal100Cosas" class="modal-overlay" onclick="cerrarModal100Cosas(event)">
+        <div class="modal-contenido">
+            <button class="btn-cerrar-modal" onclick="cerrarModal100CosasForzado()">✕</button>
+            <div class="modal-header">
+                <span style="font-size: 2.2rem;">✨</span>
+                <h3 id="modal100Head">Cuéntame algo sobre ti</h3>
+            </div>
+            <div class="modal-body">
+                <div class="input-grupo" style="margin-bottom: 12px;">
+                    <label for="numCosa">Número / Título (#1 al #100):</label>
+                    <input type="text" id="numCosa" class="custom-input" placeholder="Ej: #1 Mi comida favorita...">
+                </div>
+                <div class="input-grupo" style="margin-bottom: 12px;">
+                    <label for="textoCosa">Tu respuesta escrita:</label>
+                    <textarea id="textoCosa" class="custom-input" rows="4" placeholder="Escribe aquí lo que me quieras contar..."></textarea>
+                </div>
+                <div class="input-grupo">
+                    <label for="audioCosa">Link de Audio / Nota de voz (Opcional):</label>
+                    <input type="url" id="audioCosa" class="custom-input" placeholder="Enlace de audio...">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button onclick="guardar100Cosas()" id="btnGuardar100" class="btn-quiz" style="width: 100%;">
+                    💾 Guardar dato
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- BOT GUÍA INTERACTIVO -->
+    <div id="avatarBienvenida" class="modal-overlay" style="display: none; z-index: 99999;">
+        <div class="modal-contenido avatar-box">
+            <div class="avatar-personaje">🤖✨</div>
+            <h3 id="botTituloStep">¡Bienvenida a tu App Especial! ❤️</h3>
+            <p id="botDescStep" style="font-size: 0.95rem; color: #334155; margin: 15px 0; line-height: 1.6;"></p>
+            
+            <div class="bot-nav-footer">
+                <span id="botStepIndicator" class="step-badge">Paso 1 de 6</span>
+                <button class="btn-quiz" id="btnNextBotStep" onclick="avanzarPasoBot()">Entendido 👍</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
